@@ -95,7 +95,38 @@ publishing {
             version libVersion
             pom.withXml {
                 def root = asNode()
+                // add personal info
+                root.appendNode('description', '')
+                root.appendNode('url', '')
+                root.children().last() + pomConfig
             }
+        }
+    }
+}
+
+// configure package info for bintray
+bintray {
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    user = properties.getProperty('bintray.user')
+    key = properties.getProperty('bintray.apikey')
+    configurations = ['archives']
+    pkg {
+        repo = ''
+        userOrg = ''
+        name = ''
+        desc = ''
+        websiteUrl = ''
+        issueTrackerUrl = ''
+        vcsUrl = ''
+        githubRepo =''
+        githubReleaseNotesFile
+        publicDownloadNumbers = true
+        version {
+            name = ''
+            desc = ''
+            released = ''
+            vcsTag = ''
         }
     }
 }
